@@ -1,0 +1,33 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
+config_version=4
+
+[application]
+
+config/name="Pong"
+run/main_scene="res://App.tscn"
+config/icon="res://icon_pong.png"
+
+[autoload]
+
+Global="*res://Global.gd"
+
+[display]
+
+window/size/width=760
+window/size/height=505
+window/size/resizable=false
+
+[physics]
+
+common/enable_pause_aware_picking=true
+
+[rendering]
+
+environment/default_environment="res://default_env.tres"
