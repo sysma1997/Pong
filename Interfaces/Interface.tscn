@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://Interfaces/Interface.gd" type="Script" id=1]
 [ext_resource path="res://fonts/connection_ii/ConnectionII.tres" type="DynamicFont" id=2]
 [ext_resource path="res://Interfaces/Pause/InterfacePause.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Interfaces/Win/InterfaceWin.tscn" type="PackedScene" id=4]
 
 [node name="Interface" type="Control"]
 pause_mode = 2
@@ -45,5 +46,11 @@ valign = 1
 [node name="Pause" parent="." instance=ExtResource( 3 )]
 visible = false
 
+[node name="Win" parent="." instance=ExtResource( 4 )]
+visible = false
+
+[connection signal="winner" from="." to="Win" method="_on_Interface_winner"]
 [connection signal="continueGame" from="Pause" to="." method="_on_Pause_continueGame"]
 [connection signal="exitGame" from="Pause" to="." method="_on_Pause_exitGame"]
+[connection signal="exitGame" from="Win" to="." method="_on_Win_exitGame"]
+[connection signal="playGame" from="Win" to="." method="_on_Win_playGame"]

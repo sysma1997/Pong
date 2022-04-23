@@ -29,3 +29,8 @@ func _on_Interface_pause(isPause):
 func _on_Interface_exit():
 	get_tree().paused = false
 	Global.goto_scene("res://App.tscn")
+
+func _on_Interface_winner(title):
+	get_tree().paused = true
+func _on_Interface_play():
+	get_tree().paused = false

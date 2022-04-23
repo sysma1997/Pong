@@ -79,3 +79,6 @@ margin_bottom = 505.0
 [connection signal="body_exited" from="Table" to="." method="_on_Table_body_exited"]
 [connection signal="exit" from="Interface" to="." method="_on_Interface_exit"]
 [connection signal="pause" from="Interface" to="." method="_on_Interface_pause"]
+[connection signal="play" from="Interface" to="." method="_on_Interface_play"]
+[connection signal="play" from="Interface" to="Ball" method="_on_Interface_play"]
+[connection signal="winner" from="Interface" to="." method="_on_Interface_winner"]

@@ -32,17 +32,15 @@ func _on_Game_touchDown():
 func _on_Player_racketTouch():
 	direction.x *= -1
 	
-	touch += 1
-	if touch > 5:
-		moreSpeed()
+	touch()
 func _on_Opponent_racketTouch():
 	direction.x *= -1
-	
-	touch += 1
-	if touch > 5:
-		moreSpeed()
+	touch()
 
 func _on_Game_outTable():
+	start()
+
+func _on_Interface_play():
 	start()
 
 func start():
@@ -62,6 +60,10 @@ func start():
 		direction.y -= 1
 	else:
 		direction.y += 1
+func touch():
+	touch += 1
+	if touch > 2:
+		moreSpeed()
 func moreSpeed():
 	speed += 5000
 	touch = 1
