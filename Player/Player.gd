@@ -1,7 +1,5 @@
 extends KinematicBody2D
 
-signal racketTouch
-
 export var speed = 15000
 var screen_size
 var limit_up
@@ -15,12 +13,12 @@ func _ready():
 
 func _physics_process(delta):
 	var velocity = get_input(delta)
+	velocity.x = 0
+	
+	if position.x > 728:
+		velocity.x -= 1
 	
 	velocity = move_and_slide(velocity)
-	position.y = clamp(position.y, limit_up, limit_down)
-
-func _on_Area2D_body_entered(body):
-	emit_signal("racketTouch")
 
 func get_input(delta):
 	var velocity = Vector2()
@@ -28,6 +26,7 @@ func get_input(delta):
 		velocity.y -= 1
 	if Input.is_action_pressed("ui_down"):
 		velocity.y += 1
+	
 	velocity = (velocity.normalized() * speed) * delta
 	
 	return velocity

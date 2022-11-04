@@ -8,6 +8,7 @@ signal pointPlayer
 signal pointOpponent
 
 func _on_Up_body_entered(body):
+	print(body.name)
 	emit_signal("touchUp")
 func _on_Down_body_entered(body):
 	emit_signal("touchDown")

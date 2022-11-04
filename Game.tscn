@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://Game.gd" type="Script" id=1]
 [ext_resource path="res://Opponent/Opponent.tscn" type="PackedScene" id=2]
@@ -6,11 +6,14 @@
 [ext_resource path="res://Interfaces/Interface.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Player/Player.tscn" type="PackedScene" id=5]
 
-[sub_resource type="RectangleShape2D" id=3]
-extents = Vector2( 380, 12 )
-
 [sub_resource type="RectangleShape2D" id=4]
 extents = Vector2( 380, 252 )
+
+[sub_resource type="RectangleShape2D" id=5]
+extents = Vector2( 380, 13 )
+
+[sub_resource type="RectangleShape2D" id=6]
+extents = Vector2( 380, 20 )
 
 [node name="Game" type="Node2D"]
 script = ExtResource( 1 )
@@ -32,26 +35,6 @@ color = Color( 0, 0, 0, 1 )
 
 [node name="Ball" parent="." instance=ExtResource( 3 )]
 
-[node name="Up" type="Area2D" parent="."]
-position = Vector2( 380, -24 )
-__meta__ = {
-"_edit_group_": true
-}
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Up"]
-position = Vector2( 0, 11 )
-shape = SubResource( 3 )
-
-[node name="Down" type="Area2D" parent="."]
-position = Vector2( 380, 505 )
-__meta__ = {
-"_edit_group_": true
-}
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Down"]
-position = Vector2( 0, 11 )
-shape = SubResource( 3 )
-
 [node name="Table" type="Area2D" parent="."]
 position = Vector2( 390, 252 )
 __meta__ = {
@@ -66,16 +49,32 @@ shape = SubResource( 4 )
 margin_right = 760.0
 margin_bottom = 505.0
 
+[node name="Up" type="StaticBody2D" parent="."]
+position = Vector2( 384, -16 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Up"]
+position = Vector2( -4, 3 )
+shape = SubResource( 5 )
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+position = Vector2( 384, 528 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2( -4, -4 )
+shape = SubResource( 6 )
+
 [connection signal="outTable" from="." to="Ball" method="_on_Game_outTable"]
 [connection signal="pointOpponent" from="." to="Interface" method="_on_Game_pointOpponent"]
 [connection signal="pointPlayer" from="." to="Interface" method="_on_Game_pointPlayer"]
 [connection signal="touchDown" from="." to="Ball" method="_on_Game_touchDown"]
 [connection signal="touchUp" from="." to="Ball" method="_on_Game_touchUp"]
-[connection signal="racketTouch" from="Player" to="Ball" method="_on_Player_racketTouch"]
-[connection signal="racketTouch" from="Opponent" to="Ball" method="_on_Opponent_racketTouch"]
 [connection signal="updatePos" from="Ball" to="Opponent" method="_on_Ball_updatePos"]
-[connection signal="body_entered" from="Up" to="." method="_on_Up_body_entered"]
-[connection signal="body_entered" from="Down" to="." method="_on_Down_body_entered"]
 [connection signal="body_exited" from="Table" to="." method="_on_Table_body_exited"]
 [connection signal="exit" from="Interface" to="." method="_on_Interface_exit"]
 [connection signal="pause" from="Interface" to="." method="_on_Interface_pause"]

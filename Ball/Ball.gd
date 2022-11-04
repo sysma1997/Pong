@@ -2,7 +2,7 @@ extends KinematicBody2D
 
 signal updatePos(y)
 
-export var speed = 15000
+export var speed: int = 0
 
 enum {
 	LEFT, 
@@ -12,30 +12,26 @@ enum {
 }
 
 var direction: Vector2
+var last_direction: Vector2
 var random = RandomNumberGenerator.new()
-
-var touch: int = 1
 
 func _ready():
 	start()
 
 func _physics_process(delta):
-	direction = (direction.normalized() * speed) * delta
-	direction = move_and_slide(direction)
-	emit_signal("updatePos", direction.y)
-
-func _on_Game_touchUp():
-	direction.y *= -1
-func _on_Game_touchDown():
-	direction.y *= -1
-
-func _on_Player_racketTouch():
-	direction.x *= -1
+	direction = direction.normalized() * (200 + speed) * delta
+	var collision = move_and_collide(direction)
+	emit_signal("updatePos", position.y)
 	
-	touch()
-func _on_Opponent_racketTouch():
-	direction.x *= -1
-	touch()
+	if collision:
+		var reflect = collision.remainder.bounce(collision.normal)
+		direction = direction.bounce(collision.normal)
+		
+		var angle = last_direction.normalized().dot(direction.normalized())
+		print(angle) # if angle > 0.90 or angle < -0.90
+		
+		last_direction = direction
+		move_and_collide(reflect)
 
 func _on_Game_outTable():
 	start()
@@ -44,7 +40,7 @@ func _on_Interface_play():
 	start()
 
 func start():
-	speed = 15000
+	speed = 0
 	position = Vector2(380, 252)
 	direction = Vector2(0, 0)
 	random.randomize()
@@ -60,10 +56,6 @@ func start():
 		direction.y -= 1
 	else:
 		direction.y += 1
-func touch():
-	touch += 1
-	if touch > 2:
-		moreSpeed()
-func moreSpeed():
-	speed += 5000
-	touch = 1
+
+func _on_Timer_timeout():
+	speed += 15
