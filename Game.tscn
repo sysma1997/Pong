@@ -69,11 +69,13 @@ __meta__ = {
 position = Vector2( -4, -4 )
 shape = SubResource( 6 )
 
+[connection signal="outTable" from="." to="Player" method="_on_Game_outTable"]
 [connection signal="outTable" from="." to="Ball" method="_on_Game_outTable"]
 [connection signal="pointOpponent" from="." to="Interface" method="_on_Game_pointOpponent"]
 [connection signal="pointPlayer" from="." to="Interface" method="_on_Game_pointPlayer"]
 [connection signal="touchDown" from="." to="Ball" method="_on_Game_touchDown"]
 [connection signal="touchUp" from="." to="Ball" method="_on_Game_touchUp"]
+[connection signal="moreSpeedPlayer" from="Ball" to="Player" method="_on_Ball_moreSpeedPlayer"]
 [connection signal="updatePos" from="Ball" to="Opponent" method="_on_Ball_updatePos"]
 [connection signal="body_exited" from="Table" to="." method="_on_Table_body_exited"]
 [connection signal="exit" from="Interface" to="." method="_on_Interface_exit"]

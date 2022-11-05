@@ -30,3 +30,9 @@ func get_input(delta):
 	velocity = (velocity.normalized() * speed) * delta
 	
 	return velocity
+
+func _on_Ball_moreSpeedPlayer():
+	speed += 200
+
+func _on_Game_outTable():
+	speed = 15000

@@ -1,6 +1,7 @@
 extends KinematicBody2D
 
 signal updatePos(y)
+signal moreSpeedPlayer
 
 export var speed: int = 0
 
@@ -28,23 +29,10 @@ func _physics_process(delta):
 		direction = direction.bounce(collision.normal)
 		
 		var angle = last_direction.normalized().dot(direction.normalized())
-		#if angle > 0.65 or angle < -0.65:
-		if angle > 0 or angle < 0:
-			print("low angle: %s" % angle)
-			var rotation = (randf() * 50) + 50
-			print("rotation: %s" % rotation)
-			print("reflect: %s" % reflect)
-			if reflect.y > 0:
-				reflect.y += cos(rotation)
-			else:
-				reflect.y -= cos(rotation)
-			if reflect.x > 0:
-				reflect.x += cos(rotation)
-			else:
-				reflect.x -= cos(rotation)
-			print("reflect now: %s" % reflect)
+		if angle > 0.65 or angle < -0.65:
+			var rotation = ((randf() * 20) + 10) * delta
+			reflect = reflect.rotated(rotation)
 			direction = reflect
-			print("")
 		
 		last_direction = direction
 		move_and_collide(reflect)
@@ -75,3 +63,5 @@ func start():
 
 func _on_Timer_timeout():
 	speed += 15
+	if speed % 10 == 0:
+		emit_signal("moreSpeedPlayer")
