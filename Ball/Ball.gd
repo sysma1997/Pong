@@ -28,7 +28,23 @@ func _physics_process(delta):
 		direction = direction.bounce(collision.normal)
 		
 		var angle = last_direction.normalized().dot(direction.normalized())
-		print(angle) # if angle > 0.90 or angle < -0.90
+		#if angle > 0.65 or angle < -0.65:
+		if angle > 0 or angle < 0:
+			print("low angle: %s" % angle)
+			var rotation = (randf() * 50) + 50
+			print("rotation: %s" % rotation)
+			print("reflect: %s" % reflect)
+			if reflect.y > 0:
+				reflect.y += cos(rotation)
+			else:
+				reflect.y -= cos(rotation)
+			if reflect.x > 0:
+				reflect.x += cos(rotation)
+			else:
+				reflect.x -= cos(rotation)
+			print("reflect now: %s" % reflect)
+			direction = reflect
+			print("")
 		
 		last_direction = direction
 		move_and_collide(reflect)
